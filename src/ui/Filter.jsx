@@ -1,5 +1,3 @@
-import React from "react";
-
 function Filter({ options, onChange, currentFilter }) {
   return (
     <div className="flex items-center gap-x-2 text-xs">
@@ -23,5 +21,4 @@ function Filter({ options, onChange, currentFilter }) {
     </div>
   );
 }
-
 export default Filter;
