@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Filter from "../ui/Filter";
 import Select from "../ui/Select";
+import { projects } from "../data/projects";
 
 const statusOptions = [
   {
@@ -17,11 +18,19 @@ const statusOptions = [
   },
 ];
 
-const categoryOptions = [
+const categories = projects.map((item) => {
+  return {
+    value: item.category.englishTitle,
+    label: item.category.title,
+  };
+});
+
+const transFormedCategories = [
   {
-    value: "",
-    label: "",
+    value: "ALL",
+    label: "دسته بندی (همه)",
   },
+  ...categories,
 ];
 
 const sortOptions = [
@@ -51,25 +60,14 @@ const sortOptions = [
   },
 ];
 
-function ProjectHeader() {
-  const [status, setStatus] = useState("ALL");
-  const [category, setCategory] = useState("ALL");
-  const [sort, setSort] = useState("created_desc");
-  const handleChangeStatus = (value) => {
-    setStatus(value);
-  };
-
-  const handleChangeCategory = (e) => {
-    setCategory(e.target.value);
-  };
-
+function ProjectHeader({ status, category, sort, onChangeStatus, onChangeCategory, onChangeSort }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 text-secondary-700 mb-8">
       <h1>لیست پروژه ها </h1>
-      <Filter options={statusOptions} onChange={handleChangeStatus} currentFilter={status} />
-      <Select options={categoryOptions} value={category} onChange={handleChangeCategory} />
+      <Filter options={statusOptions} onChange={onChangeStatus} currentFilter={status} />
+      <Select options={transFormedCategories} value={category} onChange={onChangeCategory} />
 
-      <Select options={sortOptions} value={sort} onChange={() => {}} />
+      <Select options={sortOptions} value={sort} onChange={onChangeSort} />
     </div>
   );
 }
